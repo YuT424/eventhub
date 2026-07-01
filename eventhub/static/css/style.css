@@ -1,0 +1,385 @@
+/* ============================================================
+   EventHub — Global Styles
+   ============================================================ */
+
+:root {
+    --eh-primary: #0d6efd;
+    --eh-primary-dark: #0b5ed7;
+    --eh-success: #198754;
+    --eh-warning: #ffc107;
+    --eh-danger: #dc3545;
+    --eh-muted: #6c757d;
+    --eh-card-radius: 12px;
+    --eh-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --eh-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+main {
+    flex: 1;
+}
+
+/* ============================================================
+   Navbar
+   ============================================================ */
+.navbar-brand {
+    font-size: 1.4rem;
+    letter-spacing: -0.5px;
+}
+
+.navbar .nav-link {
+    font-weight: 500;
+    transition: opacity 0.2s;
+}
+
+.navbar .nav-link:hover {
+    opacity: 0.85;
+}
+
+/* ============================================================
+   Hero Section
+   ============================================================ */
+.hero-section {
+    position: relative;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 0 0 24px 24px;
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(13, 110, 253, 0.85) 0%, rgba(11, 94, 215, 0.75) 50%, rgba(8, 68, 156, 0.8) 100%);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+    padding: 3rem 1rem;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.hero-content p {
+    font-size: 1.25rem;
+    opacity: 0.95;
+}
+
+/* ============================================================
+   Search Bar in Hero
+   ============================================================ */
+.hero-search {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.hero-search .form-control {
+    border-radius: 50px 0 0 50px;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.hero-search .btn {
+    border-radius: 0 50px 50px 0;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+}
+
+.hero-search .btn-outline-light {
+    border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+/* ============================================================
+   Cards
+   ============================================================ */
+.event-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border-radius: var(--eh-card-radius);
+    overflow: hidden;
+    border: none;
+}
+
+.event-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--eh-shadow-hover);
+}
+
+.event-card .card-img-top {
+    transition: transform 0.3s ease;
+}
+
+.event-card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.event-card .card-body {
+    padding: 1.25rem;
+}
+
+.event-card .card-footer {
+    background: transparent;
+    border-top: 1px solid #f0f0f0;
+    padding: 0.75rem 1.25rem;
+}
+
+/* Card image placeholder */
+.card-img-placeholder {
+    height: 180px;
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #adb5bd;
+    font-size: 1.2rem;
+}
+
+/* ============================================================
+   Status Badges
+   ============================================================ */
+.badge-status-open {
+    background-color: #198754;
+    color: white;
+}
+
+.badge-status-inactive {
+    background-color: #6c757d;
+    color: white;
+}
+
+.badge-status-soldout {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.badge-status-cancelled {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* ============================================================
+   Category filter pills
+   ============================================================ */
+.filter-pill {
+    border-radius: 50px;
+    padding: 0.4rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+/* ============================================================
+   Section headings
+   ============================================================ */
+.section-title {
+    font-weight: 700;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: var(--eh-primary);
+    border-radius: 2px;
+}
+
+/* ============================================================
+   Auth pages (login/register)
+   ============================================================ */
+.auth-wrapper {
+    min-height: calc(100vh - 140px);
+    display: flex;
+    align-items: center;
+}
+
+.auth-card {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.auth-image {
+    background-size: cover;
+    background-position: center;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.auth-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(13, 110, 253, 0.8), rgba(8, 68, 156, 0.7));
+}
+
+.auth-image-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: white;
+    padding: 2rem;
+}
+
+.auth-image-content h2 {
+    font-weight: 800;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.auth-image-content p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+}
+
+/* ============================================================
+   Detail page
+   ============================================================ */
+.detail-info-table td {
+    padding: 0.6rem 0;
+    vertical-align: top;
+}
+
+.detail-info-table td:first-child {
+    width: 140px;
+    color: #6c757d;
+}
+
+/* ============================================================
+   Booking page
+   ============================================================ */
+.booking-summary-card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.booking-total-box {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    padding: 1.25rem;
+}
+
+/* ============================================================
+   Error pages
+   ============================================================ */
+.error-page {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.error-code {
+    font-size: 8rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -4px;
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.footer-custom {
+    background-color: #1a1a2e;
+    margin-top: auto;
+}
+
+.footer-link {
+    color: #adb5bd;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+.footer-link:hover {
+    color: white;
+}
+
+/* ============================================================
+   Misc
+   ============================================================ */
+.empty-state {
+    padding: 4rem 1rem;
+    text-align: center;
+    color: #6c757d;
+}
+
+.empty-state-icon {
+    font-size: 4rem;
+    opacity: 0.3;
+    margin-bottom: 1rem;
+}
+
+.btn-lg {
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #80b3ff;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    .hero-content p {
+        font-size: 1rem;
+    }
+    .error-code {
+        font-size: 5rem;
+    }
+}
