@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <!-- Success banner -->
+        <div class="text-center mb-4">
+            <div class="display-1 text-success">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.97 11.03a.75.75 0 0 0 1.08.01l3.5-4a.75.75 0 1 0-1.1-1.02L7.5 9.5l-1.97-1.97a.75.75 0 0 0-1.06 1.06l2.5 2.5z"/>
+                </svg>
+            </div>
+            <h2 class="text-success">Booking Confirmed!</h2>
+            <p class="text-muted">Your booking has been successfully placed.</p>
+        </div>
+
+        <!-- Order details card -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Order Details</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-borderless mb-0">
+                    <tr>
+                        <td class="text-muted" style="width: 180px;"><strong>Order ID</strong></td>
+                        <td><code class="fs-6">{{ booking.order_id }}</code></td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted"><strong>Event</strong></td>
+                        <td>{{ booking.event.name }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted"><strong>Date</strong></td>
+                        <td>{{ booking.event.date.strftime('%A, %d %B %Y at %I:%M %p') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted"><strong>Venue</strong></td>
+                        <td>{{ booking.event.venue }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted"><strong>Quantity</strong></td>
+                        <td>{{ booking.quantity }} ticket(s)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted"><strong>Price per Ticket</strong></td>
+                        <td>${{ "%.2f"|format(booking.event.price) }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted"><strong>Booking Date</strong></td>
+                        <td>{{ booking.booking_date.strftime('%d %B %Y, %I:%M %p') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted"><strong>Booked By</strong></td>
+                        <td>{{ current_user.first_name }} {{ current_user.last_name }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="card-footer bg-light">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="fs-5 fw-bold">Total Paid:</span>
+                    <span class="fs-4 fw-bold text-primary">${{ "%.2f"|format(booking.total_price) }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="d-flex gap-2 justify-content-center">
+            <a href="{{ url_for('booking.booking_history') }}" class="btn btn-primary">View My Bookings</a>
+            <a href="{{ url_for('event.list_events') }}" class="btn btn-outline-primary">Browse More Events</a>
+        </div>
+
+        <div class="alert alert-info mt-4">
+            <small>
+                <strong>Please save your Order ID</strong> for future reference.
+                You can use it to look up your booking details.
+            </small>
+        </div>
+    </div>
+</div>
+{% endblock %}
