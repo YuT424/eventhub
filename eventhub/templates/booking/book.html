@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% from "bootstrap5/form.html" import render_form, render_field %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}" class="text-decoration-none">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('event.event_detail', event_id=event.id) }}" class="text-decoration-none">{{ event.name[:30] }}{% if event.name|length > 30 %}...{% endif %}</a></li>
+                    <li class="breadcrumb-item active">Book Tickets</li>
+                </ol>
+            </nav>
+
+            <h2 class="section-title mb-4"><i class="bi bi-ticket-perforated"></i> Book Tickets</h2>
+
+            <!-- Event summary card -->
+            <div class="card booking-summary-card shadow-sm mb-4">
+                <div class="row g-0">
+                    {% if event.image %}
+                    <div class="col-md-4">
+                        <img src="{{ event.image }}" class="img-fluid rounded-start h-100" alt="{{ event.name }}" style="object-fit: cover;">
+                    </div>
+                    {% endif %}
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">{{ event.name }}</h5>
+                            <p class="card-text text-muted small mb-1">
+                                <i class="bi bi-calendar3"></i>
+                                {{ event.date.strftime('%A, %d %B %Y at %I:%M %p') }}
+                            </p>
+                            <p class="card-text text-muted small mb-1">
+                                <i class="bi bi-geo-alt"></i> {{ event.venue }}
+                            </p>
+                            <p class="card-text mt-2">
+                                <span class="fw-bold text-primary fs-5">${{ "%.2f"|format(event.price) }}</span>
+                                <small class="text-muted">per ticket</small>
+                            </p>
+                            <p class="card-text">
+                                <span class="badge badge-status-open">
+                                    <i class="bi bi-ticket"></i> {{ event.available_tickets }} available
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking form -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h5 class="mb-3">Select Quantity</h5>
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+
+                        <div class="mb-3">
+                            {{ form.quantity.label(class="form-label fw-semibold") }}
+                            <div class="input-group" style="max-width: 200px;">
+                                <button type="button" class="btn btn-outline-secondary" onclick="adjustQty(-1)">
+                                    <i class="bi bi-dash"></i>
+                                </button>
+                                {{ form.quantity(class="form-control text-center fw-bold", min=1, max=event.available_tickets, value=1, id="quantity") }}
+                                <button type="button" class="btn btn-outline-secondary" onclick="adjustQty(1)">
+                                    <i class="bi bi-plus"></i>
+                                </button>
+                            </div>
+                            {% if form.quantity.errors %}
+                            {% for error in form.quantity.errors %}
+                            <div class="text-danger small mt-1">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                            <div class="form-text">Maximum {{ event.available_tickets }} tickets available.</div>
+                        </div>
+
+                        <!-- Total price box -->
+                        <div class="booking-total-box mb-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <span class="text-muted">Ticket Price:</span>
+                                <span>${{ "%.2f"|format(event.price) }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-1">
+                                <span class="text-muted">Quantity:</span>
+                                <span id="qty-display">1</span>
+                            </div>
+                            <hr class="my-2">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-bold fs-5">Total:</span>
+                                <span id="total-display" class="fw-bold fs-4 text-primary">${{ "%.2f"|format(event.price) }}</span>
+                            </div>
+                        </div>
+
+                        {{ form.submit(class="btn btn-success btn-lg w-100") }}
+                    </form>
+                </div>
+            </div>
+
+            <div class="text-center mt-3">
+                <a href="{{ url_for('event.event_detail', event_id=event.id) }}" class="text-decoration-none small">
+                    <i class="bi bi-arrow-left"></i> Back to Event
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function adjustQty(delta) {
+    var input = document.getElementById('quantity');
+    var current = parseInt(input.value) || 1;
+    var newVal = Math.max(1, Math.min({{ event.available_tickets }}, current + delta));
+    input.value = newVal;
+    input.dispatchEvent(new Event('input'));
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    var qtyInput = document.getElementById('quantity');
+    var qtyDisplay = document.getElementById('qty-display');
+    var totalDisplay = document.getElementById('total-display');
+    var price = {{ event.price }};
+
+    qtyInput.addEventListener('input', function() {
+        var qty = parseInt(this.value) || 1;
+        qtyDisplay.textContent = qty;
+        totalDisplay.textContent = '$' + (price * qty).toFixed(2);
+    });
+});
+</script>
+{% endblock %}
